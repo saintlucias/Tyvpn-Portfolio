@@ -1,0 +1,86 @@
+# 구현 기능과 기대 효과
+
+[README](../README.md) · [화면 갤러리](SCREENS.md) · [인터랙션 효과](INTERACTIONS.md)
+
+## 1. 서비스별 랜딩과 탐색
+
+VPN과 원격 임대 PC를 각각의 페이지에서 소개합니다. 공통 내비게이션으로 두 서비스와 FAQ에 접근하고, 히어로·본문의 CTA로 해당 서비스의 요금 페이지에 이동합니다. 공통 레이아웃에서 헤더·푸터·맨 위 이동 버튼을 구성합니다.
+
+**기대 효과:** 서로 다른 상품의 소개를 구분하고 관심 상품의 요금까지 이어지는 경로를 제공합니다.
+
+근거: `src/app/layout.tsx`, `src/components/layout/main/Main.tsx`, `src/components/layout/rental-pc/RentalPCMain.tsx`, `src/components/module/nav/Navigator.tsx`.
+
+## 2. 상품·요금·사양 비교
+
+| 구분 | 실제 구현 |
+| --- | --- |
+| VPN 계열 | 3개 상품의 이름·가격·제공 항목·구매 버튼을 카드로 표시 |
+| 추천 표시 | 데이터의 `effect` 값에 따라 `BEST SELLER` 헤더와 카드 스타일 적용 |
+| PC 계열 | 5개 상품의 CPU·GPU·메모리·저장 장치·월 요금 등 표시 |
+| 선택 항목 | 값이 있는 사양만 카드 목록에 렌더링 |
+| 품절 표시 | `soldOut` 값에 따라 `SOLD OUT` 오버레이 표시 |
+| 데이터 공유 | 같은 PC 상품 배열을 소개 페이지와 요금 페이지에서 사용 |
+
+**기대 효과:** 동일한 시각 형식에서 가격과 사양을 비교하고, 소개·요금 화면의 상품 정보를 함께 관리할 수 있습니다.
+
+품절은 소스에 정의된 표시 값입니다. 실시간 재고 조회나 주문 차단 시스템은 구현 범위로 제시하지 않습니다.
+
+근거: `src/contants/item.ts`, `src/components/module/price/Price.tsx`, `src/components/module/price/RentalPrice.tsx`, `src/components/expansion/card/PriceCard.tsx`, `src/components/expansion/card/PriceCardSecond.tsx`, `src/components/module/contents/RentalContents.tsx`.
+
+## 3. 상담 채널 선택과 모달
+
+요금 카드의 구매 버튼을 누르면 상담 채널 선택 모달을 엽니다. Kakao·Telegram은 외부 상담 주소로 이동하고, Wechat은 QR 이미지를 보여주는 추가 모달을 엽니다. `useOpenContainer`는 열림 상태와 참조 영역을 관리하고 영역 밖 `mousedown`을 감지해 닫습니다.
+
+모달 컴포넌트에는 2초 타이머 기반 로딩 UI가 있습니다. 외부 상담 서버의 연결 성공을 확인하는 상태는 아닙니다.
+
+**기대 효과:** 요금 확인 직후 익숙한 상담 채널을 선택할 수 있도록 문의 경로를 연결합니다.
+
+근거: `src/components/module/modal/ContactModal.tsx`, `src/components/module/modal/Wechat.tsx`, `src/hooks/useOpenContainer.ts`.
+
+## 4. 서비스별 FAQ 아코디언
+
+VPN 12개, 임대 PC 8개 질문을 각각의 데이터 배열로 관리합니다. 질문 버튼을 누르면 답변과 화살표 스타일을 전환하며, 질문마다 별도의 열림 상태를 유지해 여러 답변을 동시에 펼칠 수 있습니다.
+
+**기대 효과:** 필요한 답변을 선택해 확인하고 구매·연장·이용 조건에 대한 기본 정보를 상담 전에 파악할 수 있습니다.
+
+근거: `src/components/module/qna/QnA.tsx`, `src/components/module/qna/RentalQnA.tsx`, `src/components/basic/container/Accordion.tsx`, `src/contants/item.ts`.
+
+## 5. 방문자 IP 표시
+
+VPN 메인의 `TopDisplayIP`가 마운트 시 `/api/ip`를 요청합니다. Cloudflare Pages Functions 핸들러는 `cf-connecting-ip`를 우선 사용하고, 없으면 `x-forwarded-for`의 첫 번째 값을 JSON으로 반환합니다.
+
+현재 UI는 IP 문자열에 `:`가 있으면 IPv6 형태로 판단해 `미보호` 문구를 표시합니다. 이 처리는 주소 형태 구분으로, VPN 연결·암호화·누출·보안 여부를 판정하지 않습니다.
+
+**기대 효과:** 방문자가 페이지에서 요청 IP 정보를 확인할 수 있습니다. 정확한 동작은 배포 환경의 헤더 제공과 Functions 라우팅에 의존합니다.
+
+근거: `src/app/TopDisplayIP.tsx`, `src/utils/convertIP.ts`, `functions/api/ip.ts`.
+
+## 6. 반응형 스타일과 공통 UI
+
+SCSS Modules로 기본 버튼·설명·태그·카드·아코디언 스타일을 구분합니다. 공통 SCSS의 태블릿 `1279px`, 모바일 `839px` 기준과 `clamp()` 글자 크기를 활용하고, 화면 폭에 따라 카드·탐색·이미지·텍스트 배치를 조정합니다.
+
+**기대 효과:** 공통 요소의 시각적 일관성을 유지하고 화면 크기에 맞춰 정보를 배치합니다. 모바일 실기기 호환성은 별도 검증하지 않았습니다.
+
+근거: `src/styles/_common.scss`, `src/styles/basic.module.scss`, `src/styles/module.module.scss`, `src/styles/expansion.module.scss`.
+
+## 7. SEO와 공유 정보
+
+| 항목 | 적용 내용 | 의도 |
+| --- | --- | --- |
+| 페이지별 Metadata | 제목, 설명, 키워드, Canonical URL | 문서별 서비스 맥락 전달 |
+| 공유 정보 | Open Graph, Twitter 카드, 대표 이미지 | 링크 공유 시 소개 정보 제공 |
+| 공통 JSON-LD | Organization, WebSite | 브랜드·사이트 정보 표현 |
+| 페이지 JSON-LD | Service, FAQPage, 상품 페이지의 구조화 데이터 | 서비스·질문·상품 정보 표현 |
+| Sitemap·robots | 4개 경로 목록, 크롤링 허용, 사이트맵 주소 | 검색 엔진의 탐색 지원 |
+
+메타데이터 구현은 검색 순위 상승이나 리치 결과 노출을 보장하지 않습니다. 검색 성과는 측정하지 않았습니다.
+
+근거: `src/app/seo.ts`, `src/app/JsonLd.tsx`, 각 `page.tsx`, `src/app/sitemap.ts`, `src/app/robots.ts`.
+
+## 구현 범위
+
+- **확인한 구현:** 서비스 웹 화면, 요금 안내, 상품·FAQ 데이터 표시, 상담 링크, 스크롤·클릭 효과, IP 조회 핸들러, SEO 설정.
+- **범위 밖:** VPN 서버와 프로토콜 구현, 실제 원격 PC 제어, 결제·주문·회원 관리, 실시간 재고 연동, 보안 성능 판정.
+- **성과 해석:** 사용자 흐름과 관리 편의는 설계 의도 및 기대 효과입니다. 매출·문의·체류시간·성능의 개선 수치를 주장하지 않습니다.
+
+원본 커밋과 기능별 소스 링크는 [출처 문서](SOURCE.md)에서 확인할 수 있습니다.
