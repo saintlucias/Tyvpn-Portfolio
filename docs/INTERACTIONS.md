@@ -4,17 +4,17 @@
 
 ## 효과 목록
 
-| 효과 | 적용 위치 | 구현 방식 | 전달하려는 경험 |
-| --- | --- | --- | --- |
-| 내비게이션 표시·숨김 | 공통 헤더 | 스크롤 위치·방향으로 클래스 변경, `top`·`opacity` transition | 스크롤 상태에 따른 탐색 UI 변화 |
-| 파동·점멸 | VPN 소개의 모바일 기기 그래픽 | `wavebtn`, `ripple`, `hideText` CSS keyframes | 서비스 소개 이미지에 움직임 부여 |
-| 좌우 커튼 개방 | VPN 중간 요금 CTA | 좌·우 덮개를 각 바깥쪽 기준으로 `scaleX` 축소 | 배경과 요금 CTA를 스크롤에 맞춰 노출 |
-| Sticky 요약 | VPN 장점 영역 | 장점 카드 옆 요약 패널에 `position: sticky` 적용 | 장점 목록을 읽는 동안 핵심 요약 유지 |
-| 3단계 콘텐츠 전환 | VPN 하단 서비스 소개 | 스크롤 진행률로 활성 인덱스 계산, `opacity`·`filter` transition | 이미지·설명·CTA를 단계별로 전달 |
-| Sticky PC 소개 | 임대 PC 사양 목록 | 설명 영역을 고정하고 사양 카드를 아래로 나열 | 상품 목록을 읽는 동안 소개 맥락 유지 |
-| 아코디언 | VPN·임대 PC FAQ | 문항별 boolean 상태, 답변·화살표 클래스 전환 | 필요한 답변을 선택해 열기·닫기 |
-| 상담 모달 | 요금 페이지 | 조건부 렌더링, 영역 밖 클릭 감지, Wechat 중첩 모달 | 가격 확인 후 상담 수단 선택 |
-| 맨 위 이동 | 공통 화면 | `window.scrollTo`와 `behavior: "smooth"` | 긴 페이지 상단으로 복귀 |
+| 효과 | 적용 위치 | 구현 방식 |
+| --- | --- | --- |
+| 내비게이션 표시·숨김 | 공통 헤더 | 스크롤 위치·방향으로 클래스 변경, `top`·`opacity` transition |
+| 파동·점멸 | VPN 소개의 모바일 기기 그래픽 | `wavebtn`, `ripple`, `hideText` CSS keyframes |
+| 좌우 커튼 개방 | VPN 중간 요금 CTA | 좌·우 덮개를 각 바깥쪽 기준으로 `scaleX` 축소 |
+| Sticky 요약 | VPN 장점 영역 | 장점 카드 옆 요약 패널에 `position: sticky` 적용 |
+| 3단계 콘텐츠 전환 | VPN 하단 서비스 소개 | 스크롤 진행률로 활성 인덱스 계산, `opacity`·`filter` transition |
+| Sticky PC 소개 | 임대 PC 사양 목록 | 설명 영역을 고정하고 사양 카드를 아래로 나열 |
+| 아코디언 | VPN·임대 PC FAQ | 문항별 boolean 상태, 답변·화살표 클래스 전환 |
+| 상담 모달 | 요금 페이지 | 조건부 렌더링, 영역 밖 클릭 감지, Wechat 중첩 모달 |
+| 맨 위 이동 | 공통 화면 | `window.scrollTo`와 `behavior: "smooth"` |
 
 ## 1. 커튼 효과의 스크롤 연동
 

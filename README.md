@@ -77,18 +77,16 @@ VPN 상품은 가격과 제공 항목을, 임대 PC는 하드웨어 사양과 �
 | 인터랙션 | 커스텀 훅, CSS animation·transition | 스크롤 이벤트, 진행률 계산, Sticky·파동 효과 |
 | 배포 구성 | `output: "export"` | HTML·CSS·JS 정적 출력 |
 | 요청 처리 | Cloudflare Pages Functions | 요청 헤더에서 IP를 읽는 별도 `/api/ip` 핸들러 |
-| 검색·공유 | Metadata, JSON-LD, sitemap, robots | 문서·서비스·FAQ 정보 제공 
-
-설계에서 다룬 내용은 다음과 같음.
+| 검색·공유 | Metadata, JSON-LD, sitemap, robots | 문서·서비스·FAQ 정보 제공 |
 
 - **서비스별 화면 분리:** 소개와 요금을 별도 경로로 나누면서 공통 헤더·푸터를 재사용함.
 - **데이터와 표현 분리:** 상품·사양·FAQ·상담 채널을 타입이 있는 배열로 정의하고 공통 UI에 전달함.
-- **스크롤 동작 분리:** 커튼·현재 콘텐츠 인덱스·내비게이션 상태를 커스텀 훅에서 계산합니다. 커튼·콘텐츠 전환 훅은 `requestAnimationFrame`으로 이벤트 갱신을 조절함.
+- **스크롤 동작 분리:** 커튼·현재 콘텐츠 인덱스·내비게이션 상태를 커스텀 훅에서 계산함. 커튼·콘텐츠 전환 훅은 `requestAnimationFrame`으로 이벤트 갱신을 조절함.
 - **검색 정보의 공통화:** `createPageMetadata`로 페이지별 제목·설명·URL·공유 이미지를 구성하고 FAQ 데이터로 구조화 데이터를 생성함.
 
-[기술 설계와 코드 근거](docs/ARCHITECTURE.md) · [인터랙션 구현 상세](docs/INTERACTIONS.md)
+[기술 설계](docs/ARCHITECTURE.md) · [인터랙션 구현 상세](docs/INTERACTIONS.md)
 
 
 ---
 
-[기능 상세](docs/FEATURES.md) · [화면 갤러리](docs/SCREENS.md) · [인터랙션 효과](docs/INTERACTIONS.md) · [기술 설계](docs/ARCHITECTURE.md) · [출처·검증 범위](docs/SOURCE.md)
+[기능 상세](docs/FEATURES.md) · [화면 갤러리](docs/SCREENS.md) · [인터랙션 효과](docs/INTERACTIONS.md) · [기술 설계](docs/ARCHITECTURE.md) · [코드 참조](docs/SOURCE.md)

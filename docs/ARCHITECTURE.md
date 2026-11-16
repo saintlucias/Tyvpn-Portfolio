@@ -50,7 +50,7 @@ public/                  # 이미지·폰트·기존 화면 캡처
 
 상품·PC 사양·질문·연락 수단을 `src/contants/item.ts`의 배열로 관리함. `CardPriceProp`, `RentalPCPriceProp`, `ContactModalProp` 등의 인터페이스가 데이터 형태를 정의함.
 
-같은 `RentalPCPriceItems`를 소개 화면과 요금 화면에서 사용해 데이터 수정 지점을 줄임. VPN·임대 PC FAQ 배열은 화면과 FAQPage JSON-LD 작성에도 사용함. 변경은 소스 수정과 재빌드를 통해 반영하는 구조임.
+같은 `RentalPCPriceItems`를 소개 화면과 요금 화면에서 사용함. VPN·임대 PC FAQ 배열은 화면과 FAQPage JSON-LD에 함께 사용함. 변경은 소스 수정과 재빌드를 통해 반영하는 구조임.
 
 ## 3. 커스텀 훅과 스타일의 분담
 
